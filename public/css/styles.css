@@ -3,4 +3,180 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+
+h1, h2 {
+  padding: 10px;
+}
+
+/* header */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+#top-header a {
+  color: black
+}
+
+.siteName {
+  font-size: x-large;
+  font-weight: 600;
+}
+
+/* navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  color: white;
+  background-color: black;
+  padding: 10px 20px;
+  margin: 0 auto;
+}
+
+/* vehicle card */
+.vehicle-card {
+  position: relative;
+  padding-bottom: 20px;
+  margin: 0 auto;
+}
+
+.vehicle-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vehicle-card .description {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: auto;
+  height: auto;
+  background: rgba(255, 255, 255, 0.8);
+  color: #00a3d9;
+}
+
+.vehicle-card .description a {
+  display: inline-block;
+  padding: 8px;
+  background: #00a3d9;
+  color: black;
+  font-weight: 600;
+}
+
+.reviews-upgrades {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* reviews */
+.reviews {
+  padding-bottom: 20px;
+}
+
+.reviews li {
+  line-height: 40px;
+}
+
+/* upgrades */
+.upgrades ul {
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+  list-style-type: none;
+  align-items: end;
+}
+
+.upgrades li {
+  text-align: center;
+}
+
+.upgrades li .img-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background-color: #00a3d9;
+  border: 1px solid;
+}
+
+.upgrades li .img-box img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.upgrades li a {
+  text-decoration: underline;
+}
+
+/* footer */
+footer {
+  padding: 20px 10px;
+}
+
+
+/* large screen layout */
+@media only screen and (min-width: 38rem) {
+  body {
+    margin: 10px;
+    background: url("/images/site/checkerboard.jpg") repeat;
+    background-size: 300px 300px;
+  }
+  
+  #wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border: 4px solid #00a3d9;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  .vehicle-card img {
+    width: 80%;
+    height: auto;
+  }
+
+  .vehicle-card .description {
+    font-size: x-large;
+    top: 50px;
+    left: 50px;
+  }
+
+  .vehicle-card .description a {
+    margin-top: 20px;
+  }
+
+  .reviews-upgrades {
+    flex-direction: row;
+  }
+
+  .upgrades {
+    order: 1;
+    flex: 2;
+    max-width: 50%;
+  }
+
+  .reviews {
+    order: 2;
+    flex: 1;
+    max-width: 50%;
+  }
 }
