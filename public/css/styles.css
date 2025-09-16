@@ -37,14 +37,17 @@ h1, h2 {
 }
 
 /* navigation */
-.navigation {
+nav ul {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
-  color: white;
   background-color: black;
   padding: 10px 20px;
   margin: 0 auto;
+}
+
+nav ul a {
+  color: white;
 }
 
 /* vehicle card */
