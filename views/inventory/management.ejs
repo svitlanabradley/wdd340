@@ -1,0 +1,34 @@
+<h1>
+    <%= title %>
+</h1>
+
+<!-- flash messages -->
+<p>
+    <% if (messages && messages.length> 0) { %>
+        <ul class="notice">
+            <% messages.forEach(msg=> { %>
+                <li>
+                    <%= msg %>
+                </li>
+                <% }) %>
+        </ul>
+    <% } %>
+
+    <% if (errors && errors.length> 0) { %>
+        <ul class="errors">
+            <% errors.forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+    <% } %>
+</p>
+
+<!-- managment links -->
+<form class="all-forms">
+    <ul class="managment-menu">
+        <li><a href="/inv/add-classification" class="menu-btn">Add New Classification</a></li>
+        <li><a href="/inv/add-inventory" class="menu-btn">Add New Inventory Item</a></li>
+    </ul>
+</form>

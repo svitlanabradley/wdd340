@@ -1,0 +1,41 @@
+<h1>
+    <%= title %>
+</h1>
+
+<!-- flash messages -->
+<% if (messages && messages.length> 0) { %>
+    <ul class="notice">
+        <% messages.forEach(msg=> { %>
+            <li>
+                <%= msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<!-- server-side errors -->
+<% if (errors && errors.length> 0) { %>
+    <ul class="errors">
+        <% errors.forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<!-- add classification form -->
+ <form action="/inv/add-classification" method="post" class="all-forms">
+    <label>Classification Name*<input 
+        name="classification_name"
+        type="text"
+        id="classification_name"
+        required
+        placeholder="Enter classification name"
+        pattern="^[A-Za-z0-9]+$"
+        title="No spaces or special characters allowed. Only letters and numbers."></label>
+    <p>Name must be alphabetic characters only</p>
+    <button type="submit">Add Classification</button>
+ </form>
+
+<p><a href="/inv/">← Back to Inventory Management</a></p>

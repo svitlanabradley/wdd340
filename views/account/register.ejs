@@ -1,0 +1,42 @@
+<h1>
+   <%= title %>
+</h1>
+
+<% if (errors && errors.length> 0) { %>
+   <ul class="errors">
+      <% errors.forEach(err=> { %>
+         <li>
+            <%= err.msg %>
+         </li>
+         <% }) %>
+   </ul>
+   <% } %>
+
+<!-- registration form -->
+ <form action="/account/register" method="post" class="all-forms">
+    <label>First Name*<input type="text" id="firstname" name="account_firstname" required placeholder="First Name" required value="<%= locals.account_firstname %>" title="Enter your first name"></label>
+
+    <label>Last Name*<input type="text" id="lastname" name="account_lastname" required placeholder="Last Name" required value="<%= locals.account_lastname %>" title="Enter your last name"></label>
+
+    <label>Email*<input type="email" id="email" name="account_email" required placeholder="Email" required value="<%= locals.account_email %>" title="Enter a valid email address"></label>
+
+    <label>Password*<input type="password" id="password" name="account_password" required placeholder="************" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" title="Enter a password"></label>
+   <div class="password-rules">
+      <p>Password must:</p>
+      <ul>
+         <li>be at least 12 characters long</li>
+         <li>contain 1 capital letter</li>
+         <li>contain 1 number</li>
+         <li>contain 1 special character</li>
+      </ul>
+   </div>
+
+    <button type="submit">Register</button>
+ </form>
+
+ <p class="login-link">
+    Already have an account?
+    <a href="/account/login">Login here</a>
+ </p>
+
+
