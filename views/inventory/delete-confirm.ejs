@@ -1,0 +1,35 @@
+<h1>
+    <%= title %>
+</h1>
+
+<%- messages() %>
+
+<% if (errors && errors.length> 0) { %>
+    <ul class="errors">
+        <% errors.forEach(err=> { %>
+            <li>
+                <%= err.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<p>Confirm Deletion - The deletion is permanent</p>
+<form action="/inv/delete" method="post" class="all-forms">
+    
+    <label>Make*<input type="text" readonly <% if(locals.inv_make) { %> value="<%= locals.inv_make %>" <% } %>></label>
+    
+    <label>Model*<input type="text" readonly <% if(locals.inv_model) { %> value="<%= locals.inv_model %>" <% } %>></label>
+    
+    <label>Year*<input type="text" readonly <% if(locals.inv_year) { %> value="<%= locals.inv_year %>" <% } %>></label>
+    
+    <label>Price (USD)*<input type="number" readonly <% if(locals.inv_price) { %> value="<%= locals.inv_price %>" <% } %>></label>
+    
+    <button type="submit" id="updateBtn">Delete Vehicle</button>
+
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+
+</form>
+
+<p><a href="/inv/">← Back to Inventory Management</a></p>

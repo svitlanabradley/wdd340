@@ -2,6 +2,8 @@
    <%= title %>
 </h1>
 
+<%- messages() %>
+
 <% if (errors && errors.length> 0) { %>
    <ul class="errors">
       <% errors.forEach(err=> { %>

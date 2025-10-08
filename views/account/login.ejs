@@ -1,16 +1,10 @@
 <h1>
     <%= title %>
 </h1>
+
+<%- messages() %>
+
 <p>
-    <% if (messages && messages.length> 0) { %>
-        <ul class="notice">
-            <% messages.forEach(msg=> { %>
-                <li>
-                    <%= msg %>
-                </li>
-                <% }) %>
-        </ul>
-        <% } %>
     <% if (errors && errors.length> 0) { %>
         <ul class="errors">
             <% errors.forEach(error=> { %>
@@ -24,9 +18,9 @@
 
 <!-- login form -->
  <form id="loginForm" action="/account/login" method="post" class="all-forms">
-    <label>Email*<input type="email" id="email" name="email" required placeholder="your@email.com" title="Enter a valid email address"></label>
+    <label>Email*<input type="email" id="account_email" name="account_email" required placeholder="your@email.com" title="Enter a valid email address"></label>
     
-    <label>Passsword*<input type="password" id="password" name="password" placeholder="************" required title="Enter a password"></label>
+    <label>Passsword*<input type="password" id="account_password" name="account_password" placeholder="************" required title="Enter a password"></label>
     <div class="password-rules">
         <p>Password must:</p>
         <ul>
@@ -36,7 +30,7 @@
             <li>contain 1 special character</li>
         </ul>
     </div>
-
+    
     <button type="submit">Login</button>
  </form>
 

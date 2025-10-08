@@ -1,0 +1,49 @@
+<h1>
+    <%= title %>
+</h1>
+
+<%- messages() %>
+
+<% if (errors && errors.length> 0) { %>
+    <ul class="errors">
+        <% errors.forEach(err=> { %>
+            <li>
+                <%= err.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<form action="/inv/edit" method="post" class="all-forms" id="updateForm">
+    <!-- classificationList contains the <select> built in utilities -->
+    <label for="classificationList">Classification*</label>
+    <%- classificationList %>
+
+    <label>Make*<input type="text" id="inv_make" name="inv_make" required value="<%= inv_make %>" title="Update the vehicle's make (e.g. Toyota, Ford)" placeholder="min of 3 characters" pattern="^[A-Za-z0-9 ]{3,}$"></label>
+    
+    <label>Model*<input type="text" id="inv_model" name="inv_model" required value="<%= inv_model %>" title="Update the vehicle's model (e.g. Camry, Mustang)" placeholder="min of 3 characters" pattern="^[A-Za-z0-9 ]{3,}$"></label>
+    
+    <label>Year*<input type="text" id="inv_year" name="inv_year" required pattern="^\d{4}$" title="Update year" value="<%= inv_year %>" placeholder="4-digit year"></label>
+    
+    <label>Price (USD)*<input type="number" id="inv_price" name="inv_price" required value="<%= inv_price %>" title="Update the price in US dollars" placeholder="decimal or integer"></label>
+    
+    <label>Miles*<input type="number" min="0" step="1" id="inv_miles" name="inv_miles" required value="<%= inv_miles %>" title="Update the mileage (whole number, no decimals)" placeholder="digits only"></label>
+    
+    <label>Color*<input type="text" id="inv_color" name="inv_color" required value="<%= inv_color %>" title="Update the vehicle's color"></label>
+    
+    <label>Full-size image path<input type="text" id="inv_image" name="inv_image" required value="<%= inv_image %>" title="Update the file path or URL of the full-size image"></label>
+    
+    <label>Thumbnail image path<input type="text" id="inv_thumbnail" name="inv_thumbnail" required value="<%= inv_thumbnail %>" title="Update the file path or URL of the thumbnail image"></label>
+    
+    <label>Description*<textarea id="inv_description" name="inv_description" rows="6" required title="Update a detailed description of the vehicle"><%= inv_description %></textarea></label>
+    
+    <button type="submit" disabled id="updateBtn">Update Vehicle</button>
+
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+
+</form>
+
+<p><a href="/inv/">← Back to Inventory Management</a></p>
+
+<script src="/js/inv-update.js"></script>

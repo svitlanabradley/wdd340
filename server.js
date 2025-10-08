@@ -5,6 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const pool = require('./database/')
 const bodyParser = require("body-parser")
@@ -19,11 +20,18 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 
-
-/* ***********************
+/* **********
  * Middleware
- * ************************/
- app.use(session({
+ * ******* */
+// Body parser (for form data)
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) //for parsing application/x-www-form-urlencoded
+
+// Cookie parser
+app.use(cookieParser())
+
+//Express session
+app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
     pool,
@@ -32,17 +40,28 @@ const static = require("./routes/static")
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
- }))
+}))
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
-app.use(function(req, res, next){
+
+// make flash messages available in templates
+app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true})) //for parsing application/x-www-form-urlencoded
+//JWT check
+app.use(utilities.checkJWTToken)
+
+//Make login astate available in all views
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.loggedin
+  res.locals.accountData = req.session.accountData
+  next()
+})
+
+
 
 /* ***********************
  * View Engine and Templates
@@ -55,8 +74,10 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-//Account route
-app.use("/account", accountRoute)
+//Account routes
+// app.use("/account", accountRoute)
+app.use("/account", require("./routes/accountRoute"))
+
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
@@ -73,6 +94,12 @@ app.use(errorRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+
+
+
+app.get("/favicon.ico", (req, res) => res.status(204).end())
+
+
 
 /* ***********************
 * Express Error Handler
@@ -96,9 +123,9 @@ app.use(async (err, req, res, next) => {
 const port = process.env.PORT || 3000
 const host = process.env.HOST
 
-/* ***********************
+/* *****************************************
  * Log statement to confirm server operation
- *************************/
+ **************************************** */
 app.listen(port, () => {
   console.log(`app listening on ${port}`)
 })

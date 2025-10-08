@@ -97,7 +97,7 @@ validate.inventoryRules = () => {
 }
 
 /* *************************
-*  Check classification data
+*  Check inventory data
 * *********************** */
 validate.checkInventoryData = async (req, res, next) => {
   const {
@@ -116,7 +116,6 @@ validate.checkInventoryData = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    // build classification list with the selected id for stickiness
     const classificationList = await utilities.buildClassificationList(classification_id)
     return res.status(400).render("inventory/add-inventory", {
       title: "Add Inventory Item",
@@ -134,6 +133,51 @@ validate.checkInventoryData = async (req, res, next) => {
       inv_miles,
       inv_color,
       classification_id,
+    })
+  }
+  next()
+}
+
+/* ****************************************
+*  Chek inventory data and return errors 
+*  back to the edit inventory view
+* *************************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    inv_id,
+  } = req.body
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    const classificationList = await utilities.buildClassificationList(classification_id)
+    return res.status(400).render("inventory/update-inventory", {
+      title: "Update " + `${inv_make} ${inv_model}`,
+      nav,
+      classificationList,
+      errors: errors.array(),
+      // sticky values
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id,
     })
   }
   next()

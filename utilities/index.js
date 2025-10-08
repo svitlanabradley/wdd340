@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const invModel = require("../models/inventory-model")
 const Util = {}
 
@@ -99,11 +101,76 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-/* ****************************************
+/* ********************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
- **************************************** */
+ ********************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  const token = req.cookies.jwt
+  if (!token) {
+    res.locals.accountData = null
+    res.locals.loggedin = 0
+    return next()
+  }
+  
+  jwt.verify(
+    token,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, decoded) {
+      if (err) {
+        req.flash("notice", "Please log in")
+        res.clearCookie("jwt")
+        res.locals.accountData = null;
+        res.locals.loggedin = 0;
+        return res.redirect("/account/login")
+      }
+    
+      const accountData = {
+        account_id: decoded.account_id,
+        account_firstname: decoded.account_firstname,
+        account_email: decoded.account_email,
+        account_type: decoded.account_type || "Customer"
+      };
+
+      req.session.accountData = accountData
+      req.session.loggedin = 1
+     
+      res.locals.accountData = accountData
+      res.locals.loggedin = 1
+      next()
+    });
+}
+
+/* ****************************************
+ * Middleware to check account type
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+  const accountType = res.locals.accountData.account_type
+  if (accountType === "Employee" || accountType === "Admin") {
+    next()
+  } else {
+    req.flash("notice", "You do not have permission to access this area.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+  
 module.exports = Util
