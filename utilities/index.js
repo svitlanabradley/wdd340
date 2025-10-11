@@ -60,13 +60,15 @@ Util.buildClassificationGrid = async function(data){
 }
 
 /* *************************
- * Build vehicle detail HTML
- *************************** */
+ * Build vehicle detail HTML 
+ ************************ */
 Util.buildVehicleDetail = async function (vehicleData) {
   let price = new Intl.NumberFormat('en-US').format(vehicleData.inv_price)
   let miles = new Intl.NumberFormat('en-US').format(vehicleData.inv_miles)
   
-  return `
+
+  // Build vehicle detail HTML
+  let vehicleHTML = `
     <div class='vehicle-detail'>
       <div class='vehicle-image'>
         <img src='${vehicleData.inv_image}' alt='Image of ${vehicleData.inv_make} ${vehicleData.inv_model}'>
@@ -79,7 +81,33 @@ Util.buildVehicleDetail = async function (vehicleData) {
         <p>${vehicleData.inv_description}</p>
       </div>
     </div>
-  `
+  `;
+  return vehicleHTML
+}
+
+/* *************************
+ * Build review HTML 
+ ************************ */
+Util.buildReviewsHTML = function (reviews = []) {
+  let reviewsHTML = ''
+  if (reviews.length > 0) {    
+    reviewsHTML = '<h3>Reviews</h3><ul class="vehicle-reviews">'
+    reviews.forEach(review => {
+      const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)
+      reviewsHTML += `
+        <li class="review-item">
+          <div class="review-rating">${stars}</div>
+          <div class="review-comment">${review.comment}</div>
+          <div class="review-date"><small>Submitted: ${new Date(review.created_at).toLocaleDateString()}</small></div>
+        </li>
+      `
+    })
+    reviewsHTML += '</ul>'
+  } else {
+    reviewsHTML = '<p class="no-reviews">No reviews yet for this vehicle.</p>'
+  }
+
+  return reviewsHTML
 }
 
 /* ********************************
@@ -168,7 +196,9 @@ Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
   } else {
-    req.flash("notice", "Please log in.")
+    // Remember where the user wanted to go
+    req.session.returnTo = req.originalUrl
+    req.flash("notice", "Please log in to continue.")
     return res.redirect("/account/login")
   }
 }

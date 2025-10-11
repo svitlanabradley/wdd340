@@ -5,22 +5,23 @@
 <!-- flash messages -->
 <%- messages() %>
 
-    <% if (errors && errors.length> 0) { %>
-        <ul class="errors">
-            <% errors.forEach(error=> { %>
-                <li>
-                    <%= error.msg %>
-                </li>
-                <% }) %>
-        </ul>
-    <% } %>
-</p>
+<% if (errors && errors.length> 0) { %>
+    <ul class="errors">
+        <% errors.forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
 
 <!-- managment links -->
 <form class="all-forms">
     <ul class="managment-menu">
         <li><a href="/inv/add-classification" class="menu-btn">Add New Classification</a></li>
         <li><a href="/inv/add-inventory" class="menu-btn">Add New Inventory Item</a></li>
+        <li><a href="/review/pending" class="menu-btn">Pending Reviews</a></li>
     </ul>
 
     <h2>Manage Inventory</h2>
@@ -28,6 +29,8 @@
     <%- classificationList %>
     <table id="inventoryDisplay"></table>
     <noscript>JavaScript must be enabled to use this page</noscript>
+
+    
 </form>
 
 <script src="../../js/inventory.js"></script>

@@ -1,2 +1,10 @@
 <h1><%= title %></h1>
+
+<%- messages() %>
+
 <%- vehicleHTML %>
+
+<%- reviewsHTML %>
+
+<a href="/review/add/<%= vehicleData.inv_id %>" class="btn">Add Review</a>
+

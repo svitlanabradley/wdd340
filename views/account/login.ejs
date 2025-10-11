@@ -20,7 +20,7 @@
  <form id="loginForm" action="/account/login" method="post" class="all-forms">
     <label>Email*<input type="email" id="account_email" name="account_email" required placeholder="your@email.com" title="Enter a valid email address"></label>
     
-    <label>Passsword*<input type="password" id="account_password" name="account_password" placeholder="************" required title="Enter a password"></label>
+    <label>Passsword*<input type="password" id="account_password" name="account_password" placeholder="************" required title="Enter a password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
     <div class="password-rules">
         <p>Password must:</p>
         <ul>

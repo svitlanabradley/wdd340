@@ -1,0 +1,67 @@
+<h1>
+    <%= title %>
+</h1>
+
+<!-- flash messages -->
+<%- messages() %>
+
+<% if (errors && errors.length> 0) { %>
+    <ul class="errors">
+        <% errors.forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<% if (reviews && reviews.length> 0) { %>
+    <h2>Pending Reviews</h2>
+    <table class="reviews-table">
+        <thead>
+            <tr>
+                <th>Vehicle ID</th>
+                <th>Account ID</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Submitted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reviews.forEach(review=> { %>
+                <tr>
+                    <td>
+                        <%= review.inv_id %>
+                    </td>
+                    <td>
+                        <%= review.account_id %>
+                    </td>
+                    <td>
+                        <%= review.rating %>/5
+                    </td>
+                    <td>
+                        <%= review.comment %>
+                    </td>
+                    <td>
+                        <%= new Date(review.created_at).toLocaleDateString() %>
+                    </td>
+                    <td>
+                        <form action="/review/update-status" method="post" style="display:inline;">
+                            <input type="hidden" name="review_id" value="<%= review.review_id %>">
+                            <input type="hidden" name="status" value="Approved">
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form action="/review/update-status" method="post" style="display:inline;">
+                            <input type="hidden" name="review_id" value="<%= review.review_id %>">
+                            <input type="hidden" name="status" value="Rejected">
+                            <button type="submit">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+             <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <p>There are no pending reviews at this time.</p>
+    <% } %>

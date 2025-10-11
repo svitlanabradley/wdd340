@@ -74,6 +74,9 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
+//Review route
+app.use("/review", require("./routes/reviewRoute"))
+
 //Account routes
 // app.use("/account", accountRoute)
 app.use("/account", require("./routes/accountRoute"))

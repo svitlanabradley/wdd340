@@ -16,9 +16,9 @@
 
 <!-- registration form -->
  <form action="/account/register" method="post" class="all-forms">
-    <label>First Name*<input type="text" id="firstname" name="account_firstname" required placeholder="First Name" required value="<%= locals.account_firstname %>" title="Enter your first name"></label>
+    <label>First Name*<input type="text" id="firstname" name="account_firstname" required placeholder="First Name" required value="<%= locals.account_firstname %>" title="Enter your first name" pattern="^[A-Za-zÀ-ÿ' -]+$"></label>
 
-    <label>Last Name*<input type="text" id="lastname" name="account_lastname" required placeholder="Last Name" required value="<%= locals.account_lastname %>" title="Enter your last name"></label>
+    <label>Last Name*<input type="text" id="lastname" name="account_lastname" required placeholder="Last Name" required value="<%= locals.account_lastname %>" title="Enter your last name" pattern="^[A-Za-zÀ-ÿ' -]+$"></label>
 
     <label>Email*<input type="email" id="email" name="account_email" required placeholder="Email" required value="<%= locals.account_email %>" title="Enter a valid email address"></label>
 
