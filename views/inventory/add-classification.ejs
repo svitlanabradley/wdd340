@@ -3,15 +3,7 @@
 </h1>
 
 <!-- flash messages -->
-<% if (messages && messages.length> 0) { %>
-    <ul class="notice">
-        <% messages.forEach(msg=> { %>
-            <li>
-                <%= msg %>
-            </li>
-            <% }) %>
-    </ul>
-<% } %>
+<%- messages() %>
 
 <!-- server-side errors -->
 <% if (errors && errors.length> 0) { %>

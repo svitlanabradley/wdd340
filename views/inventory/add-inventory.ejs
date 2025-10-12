@@ -2,15 +2,7 @@
     <%= title %>
 </h1>
 
-<% if (messages && Array.isArray(messages) && messages.length> 0) { %>
-    <ul class="notice">
-        <% messages.forEach(msg=> { %>
-            <li>
-                <%= msg %>
-            </li>
-            <% }) %>
-    </ul>
-<% } %>
+<%- messages() %>
 
 <% if (errors && errors.length> 0) { %>
     <ul class="errors">
